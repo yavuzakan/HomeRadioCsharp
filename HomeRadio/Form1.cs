@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using System.Runtime.InteropServices;
 
 namespace HomeRadio
 {
@@ -20,14 +21,29 @@ namespace HomeRadio
         public string[] songs = { };
         public List<string> songlist = new List<string>();
 
+        [DllImport("user32.dll")]
+        public static extern bool RegisterHotKey(IntPtr hWnd, int id, int fsModifiers, int vlc);
+        // RegisterHotKey(this.Handle, this.GetType().GetHashCode(), 1, (int)'A')
+
+
+        [DllImport("user32.dll")]
+        public static extern bool UnregisterHotKey(IntPtr hWnd, int id);
+
+        const int MYACTION_HOTKEY_ID = 1;
+        const int MYACTION_HOTKEY_ID2 = 2;
+        const int MYACTION_HOTKEY_ID3 = 3;
+
         public Form1()
         {
             InitializeComponent();
             allsong();
             PlayMp3();
-         
 
- 
+            RegisterHotKey(this.Handle, MYACTION_HOTKEY_ID, 0, (int)Keys.F11);
+            RegisterHotKey(this.Handle, MYACTION_HOTKEY_ID2, 0, (int)Keys.F10);
+            RegisterHotKey(this.Handle, MYACTION_HOTKEY_ID3, 0, (int)Keys.F9);
+
+
         }
         public void allsong()
         {
@@ -107,5 +123,58 @@ namespace HomeRadio
         {
             this.waveOut.Stop();
         }
+
+        private void notifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            this.Show();
+            notifyIcon1.Visible = false;
+            WindowState = FormWindowState.Normal;
+        }
+        private void Form1_Resize(object sender, EventArgs e)
+        {
+            if (WindowState == FormWindowState.Minimized)
+            {
+                this.Hide();
+                notifyIcon1.Visible = true;
+                // notifyIcon1.ShowBalloonTip(1000);
+            }
+            else if (FormWindowState.Normal == this.WindowState)
+            {
+                notifyIcon1.Visible = false;
+            }
+        }
+
+        protected override void WndProc(ref Message m)
+        {
+
+            if (m.Msg == 0x0312 && m.WParam.ToInt32() == MYACTION_HOTKEY_ID)
+            {
+                this.waveOut.Stop();
+
+
+            }
+            if (m.Msg == 0x0312 && m.WParam.ToInt32() == MYACTION_HOTKEY_ID2)
+            {
+                this.waveOut.Pause();
+
+            }
+            if (m.Msg == 0x0312 && m.WParam.ToInt32() == MYACTION_HOTKEY_ID3)
+            {
+                this.waveOut.Play();
+
+
+            }
+
+
+
+            base.WndProc(ref m);
+
+
+        }
+
+
+
+
+
     }
 }
