@@ -32,6 +32,7 @@ namespace HomeRadio
         const int MYACTION_HOTKEY_ID = 1;
         const int MYACTION_HOTKEY_ID2 = 2;
         const int MYACTION_HOTKEY_ID3 = 3;
+        const int MYACTION_HOTKEY_ID4 = 4;
 
         public Form1()
         {
@@ -42,7 +43,7 @@ namespace HomeRadio
             RegisterHotKey(this.Handle, MYACTION_HOTKEY_ID, 0, (int)Keys.F11);
             RegisterHotKey(this.Handle, MYACTION_HOTKEY_ID2, 0, (int)Keys.F10);
             RegisterHotKey(this.Handle, MYACTION_HOTKEY_ID3, 0, (int)Keys.F9);
-
+            RegisterHotKey(this.Handle, MYACTION_HOTKEY_ID4, 0, (int)Keys.F8);
 
         }
         public void allsong()
@@ -164,6 +165,16 @@ namespace HomeRadio
 
 
             }
+
+            if (m.Msg == 0x0312 && m.WParam.ToInt32() == MYACTION_HOTKEY_ID4)
+            {
+                this.Show();
+                notifyIcon1.Visible = false;
+                WindowState = FormWindowState.Normal;
+
+
+            }
+
 
 
 
