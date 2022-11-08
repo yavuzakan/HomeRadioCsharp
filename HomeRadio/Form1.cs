@@ -86,20 +86,39 @@ namespace HomeRadio
 
         private void PlayMp3()
         {
-      
 
-            Random random = new Random();
-            int start2 = random.Next(0, songs.Length);
-           String playsong = "mp3/" + songs[start2];
-            this.Text = songs[start2];
+            try {
 
-            this.waveOut = new WaveOut(); // or new WaveOutEvent() if you are not using WinForms/WPF
-            this.mp3FileReader = new Mp3FileReader(playsong);
-            this.waveOut.Init(mp3FileReader);
-           
-            this.waveOut.Play();
-            this.waveOut.PlaybackStopped += OnPlaybackStopped;
-            
+                Random random = new Random();
+                int start2 = random.Next(0, songs.Length);
+                String playsong = "mp3/" + songs[start2];
+                this.Text = songs[start2];
+
+                this.waveOut = new WaveOut(); // or new WaveOutEvent() if you are not using WinForms/WPF
+                this.mp3FileReader = new Mp3FileReader(playsong);
+                this.waveOut.Init(mp3FileReader);
+
+                this.waveOut.Play();
+                this.waveOut.PlaybackStopped += OnPlaybackStopped;
+            }
+            catch (Exception e)
+            {
+
+                Random random = new Random();
+                int start2 = random.Next(0, songs.Length);
+                String playsong = "mp3/" + songs[start2];
+                this.Text = songs[start2];
+
+                this.waveOut = new WaveOut(); // or new WaveOutEvent() if you are not using WinForms/WPF
+                this.mp3FileReader = new Mp3FileReader(playsong);
+                this.waveOut.Init(mp3FileReader);
+
+                this.waveOut.Play();
+                this.waveOut.PlaybackStopped += OnPlaybackStopped;
+            }
+
+
+
         }
 
         private void OnPlaybackStopped(object sender, EventArgs e)
@@ -182,9 +201,6 @@ namespace HomeRadio
 
 
         }
-
-
-
 
 
     }
