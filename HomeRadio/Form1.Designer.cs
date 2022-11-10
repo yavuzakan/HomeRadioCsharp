@@ -124,6 +124,8 @@ namespace HomeRadio
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximumSize = new System.Drawing.Size(306, 141);
+            this.MinimumSize = new System.Drawing.Size(306, 141);
             this.Name = "Form1";
             this.Text = "HomeRadio";
             this.Resize += new System.EventHandler(this.Form1_Resize);
