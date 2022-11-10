@@ -16,6 +16,7 @@ namespace HomeRadio
     //NAudio - Nuget  
     public partial class Form1 : Form
     {
+
         private IWavePlayer waveOut;
         private Mp3FileReader mp3FileReader;
         public string[] songs = { };
@@ -92,8 +93,9 @@ namespace HomeRadio
                 Random random = new Random();
                 int start2 = random.Next(0, songs.Length);
                 String playsong = "mp3/" + songs[start2];
-                this.Text = songs[start2];
-
+                String Songnamewrite = songs[start2].Remove(songs[start2].Length - 4);
+                textBox1.Text = Songnamewrite;
+                //ReturnName = Name.Remove(Name.Length - 1);
                 this.waveOut = new WaveOut(); // or new WaveOutEvent() if you are not using WinForms/WPF
                 this.mp3FileReader = new Mp3FileReader(playsong);
                 this.waveOut.Init(mp3FileReader);
@@ -107,7 +109,8 @@ namespace HomeRadio
                 Random random = new Random();
                 int start2 = random.Next(0, songs.Length);
                 String playsong = "mp3/" + songs[start2];
-                this.Text = songs[start2];
+                String Songnamewrite = songs[start2].Remove(songs[start2].Length - 4);
+                textBox1.Text = Songnamewrite;
 
                 this.waveOut = new WaveOut(); // or new WaveOutEvent() if you are not using WinForms/WPF
                 this.mp3FileReader = new Mp3FileReader(playsong);
@@ -202,6 +205,30 @@ namespace HomeRadio
 
         }
 
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            try
+            {
+                this.waveOut.Volume =  this.waveOut.Volume + 0.1f;
+            }
+            catch (Exception e1)
+            {
+              
+            }
 
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                this.waveOut.Volume =  this.waveOut.Volume - 0.1f;
+            }
+            catch (Exception e1)
+            {
+                this.waveOut.Volume =  0.0f;
+            }
+
+        }
     }
 }
